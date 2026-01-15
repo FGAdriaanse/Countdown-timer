@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Countdown to 24 April 2026</title>
+  <style>
+    :root {
+      --bg: #0f1724;
+      --card: #0b1220;
+      --accent: #7dd3fc;
+      --muted: #94a3b8;
+      --glass: rgba(255,255,255,0.04);
+    }
+    html,body{height:100%}
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #07112b 0%, #081026 100%);
+      color: #e6eef8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    .widget {
+      width: min(560px, 96%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: 12px;
+      padding: 20px 22px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid rgba(255,255,255,0.03);
+      transition: transform .18s ease;
+    }
+    .widget:active { transform: scale(.997); }
+    .left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .title {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: .04em;
+    }
+    .target {
+      font-weight: 600;
+      font-size: 18px;
+      color: #f8fbff;
+    }
+    .days-pill {
+      background: linear-gradient(90deg, rgba(125,211,252,0.12), rgba(59,130,246,0.08));
+      padding: 14px 18px;
+      border-radius: 10px;
+      text-align: center;
+      min-width: 120px;
+      box-shadow: inset 0 -2px 6px rgba(8,12,20,0.35);
+    }
+    .days {
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    @media (max-width:480px){
+      .widget{flex-direction:column;align-items:flex-start}
+      .days-pill{min-width:100%;display:flex;justify-content:space-between;align-items:center}
+      .days{font-size:28px}
+    }
+    .tiny-note{
+      font-size:12px;color:var(--muted);margin-top:8px;
+    }
+  </style>
+</head>
+<body>
+  <main class="widget" role="region" aria-label="Countdown to 24 April 2026">
+    <div class="left">
+      <div class="title">Countdown</div>
+      <div class="target">24 April 2026</div>
+      <div class="tiny-note" id="status">Days remaining (local time)</div>
+    </div>
+
+    <div class="days-pill" aria-hidden="false">
+      <div>
+        <div id="days" class="days">—</div>
+        <div class="label" id="unit">days</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Target date: 24 April 2026 at local 00:00
+    const target = new Date(2026, 3, 24, 0, 0, 0, 0); // month is 0-based: 3 = April
+    const daysEl = document.getElementById('days');
+    const statusEl = document.getElementById('status');
+
+    function computeDaysLeft(now) {
+      const msPerDay = 24 * 60 * 60 * 1000;
+      const diff = target.getTime() - now.getTime();
+      // Round up so partial days count as 1 day remaining
+      return Math.ceil(diff / msPerDay);
+    }
+
+    function update() {
+      const now = new Date();
+      const daysLeft = computeDaysLeft(now);
+
+      if (daysLeft > 1) {
+        daysEl.textContent = daysLeft.toLocaleString();
+        document.getElementById('unit').textContent = 'days';
+        statusEl.textContent = 'Days remaining (local time)';
+      } else if (daysLeft === 1) {
+        daysEl.textContent = '1';
+        document.getElementById('unit').textContent = 'day';
+        statusEl.textContent = 'Tomorrow!';
+      } else if (daysLeft === 0) {
+        daysEl.textContent = '0';
+        document.getElementById('unit').textContent = 'days';
+        statusEl.textContent = "It's today 🎉";
+      } else {
+        // Event has passed
+        daysEl.textContent = Math.abs(daysLeft).toLocaleString();
+        document.getElementById('unit').textContent = 'days ago';
+        statusEl.textContent = 'Event has passed';
+      }
+    }
+
+    // Initial render
+    update();
+    // Update every minute to keep the number accurate across local midnight
+    setInterval(update, 60 * 1000);
+
+    // Accessibility: expose plain text summary for screen readers
+    (function addAriaSummary(){
+      const region = document.querySelector('main[role="region"]');
+      function setAria(){
+        const d = daysEl.textContent;
+        const u = document.getElementById('unit').textContent;
+        region.setAttribute('aria-label', `Countdown: ${d} ${u} until 24 April 2026`);
+      }
+      const obs = new MutationObserver(setAria);
+      obs.observe(daysEl, { childList: true });
+      setAria();
+    })();
+  </script>
+</body>
+</html>
