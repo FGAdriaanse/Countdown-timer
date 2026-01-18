@@ -4,19 +4,23 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Namibia Countdown</title>
+
   <style>
     :root {
-      /* Namibia vibe: dunes + sunrise + deep sky */
-      --bg1: rgba(255, 164, 80, 0.18);
-      --bg2: rgba(255, 210, 140, 0.14);
-      --card: rgba(20, 28, 40, 0.65);
-      --border: rgba(255, 255, 255, 0.16);
-      --text: rgba(255, 255, 255, 0.92);
-      --muted: rgba(255, 255, 255, 0.72);
-      --accent: rgba(255, 176, 89, 0.95);
-      --accent2: rgba(255, 226, 163, 0.90);
-      --shadow: rgba(0, 0, 0, 0.28);
-      color-scheme: dark;
+      /* Pastel desert palette */
+      --sand: #f3ede4;
+      --clay: #e6d3c2;
+      --stone: #c9c1b8;
+      --sky: #e9f0f2;
+
+      --card: rgba(255, 255, 255, 0.78);
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #2e2a26;
+      --muted: #6f675e;
+      --accent: #cfa98b;
+      --accent-soft: #ead6c4;
+
+      color-scheme: light;
     }
 
     body {
@@ -28,20 +32,18 @@
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
 
-      /* “Namibia” background: dunes + sky gradient */
       background:
-        radial-gradient(800px 300px at 20% 20%, var(--bg2), transparent 60%),
-        radial-gradient(900px 360px at 80% 30%, var(--bg1), transparent 60%),
-        linear-gradient(180deg, rgba(7, 14, 26, 1) 0%, rgba(10, 18, 32, 1) 55%, rgba(8, 13, 23, 1) 100%);
+        radial-gradient(900px 420px at 20% 20%, var(--sky), transparent 60%),
+        radial-gradient(800px 380px at 80% 30%, var(--sand), transparent 60%),
+        linear-gradient(180deg, #f7f4ef 0%, #efe7dc 100%);
     }
 
     .card {
       width: min(760px, 100%);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 18px 18px 14px;
+      border-radius: 20px;
+      padding: 20px 20px 16px;
       background: var(--card);
-      box-shadow: 0 14px 40px var(--shadow);
       backdrop-filter: blur(10px);
     }
 
@@ -58,43 +60,38 @@
       gap: 10px;
       align-items: center;
       font-size: 14px;
-      letter-spacing: 0.2px;
-      opacity: 0.95;
+      letter-spacing: 0.3px;
     }
 
     .badge {
       font-size: 12px;
-      padding: 4px 10px;
+      padding: 4px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      color: var(--accent2);
-      user-select: none;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: var(--accent-soft);
+      color: #5a4636;
     }
 
     .meta {
       font-size: 12px;
       color: var(--muted);
-      opacity: 0.95;
     }
 
     .big {
-      margin-top: 12px;
+      margin-top: 14px;
       display: grid;
       gap: 10px;
     }
 
     .days {
       font-size: clamp(44px, 8vw, 84px);
-      font-weight: 800;
-      letter-spacing: 0.6px;
+      font-weight: 700;
       line-height: 1.05;
       font-variant-numeric: tabular-nums;
     }
 
     .days .num {
-      color: var(--accent);
-      text-shadow: 0 0 22px rgba(255, 176, 89, 0.18);
+      color: #8b5e3c;
     }
 
     .subtitle {
@@ -107,7 +104,7 @@
     }
 
     .row {
-      margin-top: 14px;
+      margin-top: 16px;
       display: flex;
       gap: 10px;
       align-items: center;
@@ -116,36 +113,38 @@
 
     button {
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.16);
-      padding: 8px 12px;
-      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(0,0,0,0.10);
+      padding: 8px 14px;
+      background: #ffffff;
       color: var(--text);
       cursor: pointer;
       font-weight: 600;
     }
 
-    button:hover { background: rgba(255,255,255,0.12); }
-
-    button.primary {
-      border-color: rgba(255, 176, 89, 0.35);
-      background: rgba(255, 176, 89, 0.16);
-      color: var(--accent2);
+    button:hover {
+      background: #f6f2ed;
     }
 
-    input[type="date"]{
+    button.primary {
+      background: var(--accent-soft);
+      border-color: rgba(0,0,0,0.08);
+      color: #5a4636;
+    }
+
+    input[type="date"] {
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.18);
+      border: 1px solid rgba(0,0,0,0.12);
       padding: 8px 12px;
-      background: rgba(0,0,0,0.10);
+      background: #ffffff;
       color: var(--text);
       outline: none;
     }
 
     .editPanel {
       display: none;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255,255,255,0.12);
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0,0,0,0.08);
       gap: 10px;
       align-items: center;
       flex-wrap: wrap;
@@ -157,10 +156,9 @@
     }
 
     .foot {
-      margin-top: 10px;
+      margin-top: 12px;
       font-size: 12px;
       color: var(--muted);
-      opacity: 0.95;
     }
   </style>
 </head>
@@ -169,7 +167,7 @@
   <div class="card">
     <div class="top">
       <div class="title">
-        <span class="badge">Namibia Trip</span>
+        <span class="badge">Namibia</span>
         <span id="headline">Countdown</span>
       </div>
       <div class="meta" id="today"></div>
@@ -179,12 +177,13 @@
       <div class="days" id="daysDisplay">
         <span class="num">--</span> days
       </div>
-      <div class="subtitle" id="subline">Target: <strong id="targetLabel">----</strong></div>
+      <div class="subtitle">
+        Target: <strong id="targetLabel">----</strong>
+      </div>
     </div>
 
     <div class="row">
       <button class="primary" id="editBtn">Edit date</button>
-      <button id="resetBtn">Reset (30 days from today)</button>
       <span class="hint" id="status"></span>
     </div>
 
@@ -192,7 +191,6 @@
       <input id="targetDate" type="date" />
       <button class="primary" id="saveBtn">Save</button>
       <button id="cancelBtn">Cancel</button>
-      <span class="hint">Tip: pick your flight arrival date.</span>
     </div>
 
     <div class="foot" id="footnote"></div>
@@ -200,17 +198,15 @@
 
   <script>
     const $ = (id) => document.getElementById(id);
-    const KEY = "namibiaCountdownTargetDate"; // stored as YYYY-MM-DD
+    const KEY = "namibiaCountdownTargetDate";
 
     function formatPrettyDate(d) {
-      return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "2-digit", weekday: "long" });
-    }
-
-    function formatISODate(d) {
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, "0");
-      const day = String(d.getDate()).padStart(2, "0");
-      return `${y}-${m}-${day}`;
+      return d.toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        weekday: "long"
+      });
     }
 
     function startOfDay(d) {
@@ -219,15 +215,10 @@
       return x;
     }
 
-    function addDays(d, days) {
-      const x = new Date(d);
-      x.setDate(x.getDate() + days);
-      return x;
-    }
-
     function defaultTargetISO() {
-      // Default: 30 days from today (easy starter)
-      return formatISODate(addDays(new Date(), 30));
+      const d = new Date();
+      d.setDate(d.getDate() + 30);
+      return d.toISOString().slice(0,10);
     }
 
     function readTargetISO() {
@@ -238,8 +229,6 @@
       localStorage.setItem(KEY, val);
     }
 
-    function setStatus(msg="") { $("status").textContent = msg; }
-
     function update() {
       const now = new Date();
       $("today").textContent = formatPrettyDate(now);
@@ -248,8 +237,7 @@
       const target = startOfDay(new Date(iso + "T00:00:00"));
       const today = startOfDay(now);
 
-      // Difference in full days
-      const diffMs = target.getTime() - today.getTime();
+      const diffMs = target - today;
       const daysLeft = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
 
       $("targetLabel").textContent = formatPrettyDate(target);
@@ -257,66 +245,49 @@
       if (daysLeft > 1) {
         $("daysDisplay").innerHTML = `<span class="num">${daysLeft}</span> days`;
         $("headline").textContent = "Days left";
-        $("footnote").textContent = "Desert sun, big skies, and that first cold drink after a long drive.";
+        $("footnote").textContent = "Quiet mornings. Long roads. Big skies.";
       } else if (daysLeft === 1) {
         $("daysDisplay").innerHTML = `<span class="num">1</span> day`;
         $("headline").textContent = "Tomorrow";
-        $("footnote").textContent = "Pack the small things: chargers, sunglasses, and a good playlist.";
+        $("footnote").textContent = "Pack light. Drive slow.";
       } else if (daysLeft === 0) {
         $("daysDisplay").innerHTML = `<span class="num">0</span> days`;
         $("headline").textContent = "Today";
-        $("footnote").textContent = "It’s go time. Enjoy Namibia.";
+        $("footnote").textContent = "Namibia begins.";
       } else {
-        // Past date
-        const pastBy = Math.abs(daysLeft);
-        $("daysDisplay").innerHTML = `<span class="num">${pastBy}</span> days`;
-        $("headline").textContent = "Days since target";
-        $("footnote").textContent = "Want to set a new target date?";
+        $("daysDisplay").innerHTML = `<span class="num">${Math.abs(daysLeft)}</span> days`;
+        $("headline").textContent = "Days since";
+        $("footnote").textContent = "Ready for the next journey?";
       }
     }
 
-    // UI: edit panel
     function openEdit() {
       $("editPanel").style.display = "flex";
       $("targetDate").value = readTargetISO();
-      setStatus("");
     }
+
     function closeEdit() {
       $("editPanel").style.display = "none";
+      $("status").textContent = "";
     }
 
     $("editBtn").addEventListener("click", () => {
-      if ($("editPanel").style.display === "flex") closeEdit();
-      else openEdit();
+      $("editPanel").style.display === "flex" ? closeEdit() : openEdit();
     });
 
     $("saveBtn").addEventListener("click", () => {
       const val = $("targetDate").value;
-      if (!val) { setStatus("Pick a date first."); return; }
+      if (!val) return;
       writeTargetISO(val);
       closeEdit();
-      setStatus("Saved.");
+      $("status").textContent = "Saved";
       update();
-      setTimeout(() => setStatus(""), 1200);
+      setTimeout(() => $("status").textContent = "", 1200);
     });
 
-    $("cancelBtn").addEventListener("click", () => {
-      closeEdit();
-      setStatus("");
-    });
+    $("cancelBtn").addEventListener("click", closeEdit);
 
-    $("resetBtn").addEventListener("click", () => {
-      const def = defaultTargetISO();
-      writeTargetISO(def);
-      if ($("editPanel").style.display === "flex") $("targetDate").value = def;
-      setStatus("Reset to 30 days from today.");
-      update();
-      setTimeout(() => setStatus(""), 1400);
-    });
-
-    // Run
     update();
-    // Update once per minute (days don’t need per-second updates)
     setInterval(update, 60 * 1000);
   </script>
 </body>
