@@ -2,157 +2,322 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Countdown to 24 April 2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Namibia Countdown</title>
   <style>
     :root {
-      --bg: #0f1724;
-      --card: #0b1220;
-      --accent: #7dd3fc;
-      --muted: #94a3b8;
-      --glass: rgba(255,255,255,0.04);
+      /* Namibia vibe: dunes + sunrise + deep sky */
+      --bg1: rgba(255, 164, 80, 0.18);
+      --bg2: rgba(255, 210, 140, 0.14);
+      --card: rgba(20, 28, 40, 0.65);
+      --border: rgba(255, 255, 255, 0.16);
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.72);
+      --accent: rgba(255, 176, 89, 0.95);
+      --accent2: rgba(255, 226, 163, 0.90);
+      --shadow: rgba(0, 0, 0, 0.28);
+      color-scheme: dark;
     }
-    html,body{height:100%}
+
     body {
       margin: 0;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg, #07112b 0%, #081026 100%);
-      color: #e6eef8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+
+      /* “Namibia” background: dunes + sky gradient */
+      background:
+        radial-gradient(800px 300px at 20% 20%, var(--bg2), transparent 60%),
+        radial-gradient(900px 360px at 80% 30%, var(--bg1), transparent 60%),
+        linear-gradient(180deg, rgba(7, 14, 26, 1) 0%, rgba(10, 18, 32, 1) 55%, rgba(8, 13, 23, 1) 100%);
     }
-    .widget {
-      width: min(560px, 96%);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius: 12px;
-      padding: 20px 22px;
-      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+
+    .card {
+      width: min(760px, 100%);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px 18px 14px;
+      background: var(--card);
+      box-shadow: 0 14px 40px var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .top {
       display: flex;
-      gap: 18px;
-      align-items: center;
       justify-content: space-between;
-      border: 1px solid rgba(255,255,255,0.03);
-      transition: transform .18s ease;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
     }
-    .widget:active { transform: scale(.997); }
-    .left {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+
     .title {
+      display: flex;
+      gap: 10px;
+      align-items: center;
       font-size: 14px;
-      color: var(--muted);
-      letter-spacing: .04em;
+      letter-spacing: 0.2px;
+      opacity: 0.95;
     }
-    .target {
-      font-weight: 600;
-      font-size: 18px;
-      color: #f8fbff;
+
+    .badge {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: var(--accent2);
+      user-select: none;
     }
-    .days-pill {
-      background: linear-gradient(90deg, rgba(125,211,252,0.12), rgba(59,130,246,0.08));
-      padding: 14px 18px;
-      border-radius: 10px;
-      text-align: center;
-      min-width: 120px;
-      box-shadow: inset 0 -2px 6px rgba(8,12,20,0.35);
-    }
-    .days {
-      font-size: 34px;
-      font-weight: 700;
-      color: var(--accent);
-      line-height: 1;
-    }
-    .label {
+
+    .meta {
       font-size: 12px;
       color: var(--muted);
-      margin-top: 4px;
+      opacity: 0.95;
     }
-    @media (max-width:480px){
-      .widget{flex-direction:column;align-items:flex-start}
-      .days-pill{min-width:100%;display:flex;justify-content:space-between;align-items:center}
-      .days{font-size:28px}
+
+    .big {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
     }
-    .tiny-note{
-      font-size:12px;color:var(--muted);margin-top:8px;
+
+    .days {
+      font-size: clamp(44px, 8vw, 84px);
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      line-height: 1.05;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .days .num {
+      color: var(--accent);
+      text-shadow: 0 0 22px rgba(255, 176, 89, 0.18);
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .row {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:hover { background: rgba(255,255,255,0.12); }
+
+    button.primary {
+      border-color: rgba(255, 176, 89, 0.35);
+      background: rgba(255, 176, 89, 0.16);
+      color: var(--accent2);
+    }
+
+    input[type="date"]{
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 8px 12px;
+      background: rgba(0,0,0,0.10);
+      color: var(--text);
+      outline: none;
+    }
+
+    .editPanel {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .foot {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      opacity: 0.95;
     }
   </style>
 </head>
+
 <body>
-  <main class="widget" role="region" aria-label="Countdown to 24 April 2026">
-    <div class="left">
-      <div class="title">Countdown</div>
-      <div class="target">24 April 2026</div>
-      <div class="tiny-note" id="status">Days remaining (local time)</div>
+  <div class="card">
+    <div class="top">
+      <div class="title">
+        <span class="badge">Namibia Trip</span>
+        <span id="headline">Countdown</span>
+      </div>
+      <div class="meta" id="today"></div>
     </div>
 
-    <div class="days-pill" aria-hidden="false">
-      <div>
-        <div id="days" class="days">—</div>
-        <div class="label" id="unit">days</div>
+    <div class="big">
+      <div class="days" id="daysDisplay">
+        <span class="num">--</span> days
       </div>
+      <div class="subtitle" id="subline">Target: <strong id="targetLabel">----</strong></div>
     </div>
-  </main>
+
+    <div class="row">
+      <button class="primary" id="editBtn">Edit date</button>
+      <button id="resetBtn">Reset (30 days from today)</button>
+      <span class="hint" id="status"></span>
+    </div>
+
+    <div class="editPanel" id="editPanel">
+      <input id="targetDate" type="date" />
+      <button class="primary" id="saveBtn">Save</button>
+      <button id="cancelBtn">Cancel</button>
+      <span class="hint">Tip: pick your flight arrival date.</span>
+    </div>
+
+    <div class="foot" id="footnote"></div>
+  </div>
 
   <script>
-    // Target date: 24 April 2026 at local 00:00
-    const target = new Date(2026, 3, 24, 0, 0, 0, 0); // month is 0-based: 3 = April
-    const daysEl = document.getElementById('days');
-    const statusEl = document.getElementById('status');
+    const $ = (id) => document.getElementById(id);
+    const KEY = "namibiaCountdownTargetDate"; // stored as YYYY-MM-DD
 
-    function computeDaysLeft(now) {
-      const msPerDay = 24 * 60 * 60 * 1000;
-      const diff = target.getTime() - now.getTime();
-      // Round up so partial days count as 1 day remaining
-      return Math.ceil(diff / msPerDay);
+    function formatPrettyDate(d) {
+      return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "2-digit", weekday: "long" });
     }
+
+    function formatISODate(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+
+    function startOfDay(d) {
+      const x = new Date(d);
+      x.setHours(0,0,0,0);
+      return x;
+    }
+
+    function addDays(d, days) {
+      const x = new Date(d);
+      x.setDate(x.getDate() + days);
+      return x;
+    }
+
+    function defaultTargetISO() {
+      // Default: 30 days from today (easy starter)
+      return formatISODate(addDays(new Date(), 30));
+    }
+
+    function readTargetISO() {
+      return localStorage.getItem(KEY) || defaultTargetISO();
+    }
+
+    function writeTargetISO(val) {
+      localStorage.setItem(KEY, val);
+    }
+
+    function setStatus(msg="") { $("status").textContent = msg; }
 
     function update() {
       const now = new Date();
-      const daysLeft = computeDaysLeft(now);
+      $("today").textContent = formatPrettyDate(now);
+
+      const iso = readTargetISO();
+      const target = startOfDay(new Date(iso + "T00:00:00"));
+      const today = startOfDay(now);
+
+      // Difference in full days
+      const diffMs = target.getTime() - today.getTime();
+      const daysLeft = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+      $("targetLabel").textContent = formatPrettyDate(target);
 
       if (daysLeft > 1) {
-        daysEl.textContent = daysLeft.toLocaleString();
-        document.getElementById('unit').textContent = 'days';
-        statusEl.textContent = 'Days remaining (local time)';
+        $("daysDisplay").innerHTML = `<span class="num">${daysLeft}</span> days`;
+        $("headline").textContent = "Days left";
+        $("footnote").textContent = "Desert sun, big skies, and that first cold drink after a long drive.";
       } else if (daysLeft === 1) {
-        daysEl.textContent = '1';
-        document.getElementById('unit').textContent = 'day';
-        statusEl.textContent = 'Tomorrow!';
+        $("daysDisplay").innerHTML = `<span class="num">1</span> day`;
+        $("headline").textContent = "Tomorrow";
+        $("footnote").textContent = "Pack the small things: chargers, sunglasses, and a good playlist.";
       } else if (daysLeft === 0) {
-        daysEl.textContent = '0';
-        document.getElementById('unit').textContent = 'days';
-        statusEl.textContent = "It's today 🎉";
+        $("daysDisplay").innerHTML = `<span class="num">0</span> days`;
+        $("headline").textContent = "Today";
+        $("footnote").textContent = "It’s go time. Enjoy Namibia.";
       } else {
-        // Event has passed
-        daysEl.textContent = Math.abs(daysLeft).toLocaleString();
-        document.getElementById('unit').textContent = 'days ago';
-        statusEl.textContent = 'Event has passed';
+        // Past date
+        const pastBy = Math.abs(daysLeft);
+        $("daysDisplay").innerHTML = `<span class="num">${pastBy}</span> days`;
+        $("headline").textContent = "Days since target";
+        $("footnote").textContent = "Want to set a new target date?";
       }
     }
 
-    // Initial render
-    update();
-    // Update every minute to keep the number accurate across local midnight
-    setInterval(update, 60 * 1000);
+    // UI: edit panel
+    function openEdit() {
+      $("editPanel").style.display = "flex";
+      $("targetDate").value = readTargetISO();
+      setStatus("");
+    }
+    function closeEdit() {
+      $("editPanel").style.display = "none";
+    }
 
-    // Accessibility: expose plain text summary for screen readers
-    (function addAriaSummary(){
-      const region = document.querySelector('main[role="region"]');
-      function setAria(){
-        const d = daysEl.textContent;
-        const u = document.getElementById('unit').textContent;
-        region.setAttribute('aria-label', `Countdown: ${d} ${u} until 24 April 2026`);
-      }
-      const obs = new MutationObserver(setAria);
-      obs.observe(daysEl, { childList: true });
-      setAria();
-    })();
+    $("editBtn").addEventListener("click", () => {
+      if ($("editPanel").style.display === "flex") closeEdit();
+      else openEdit();
+    });
+
+    $("saveBtn").addEventListener("click", () => {
+      const val = $("targetDate").value;
+      if (!val) { setStatus("Pick a date first."); return; }
+      writeTargetISO(val);
+      closeEdit();
+      setStatus("Saved.");
+      update();
+      setTimeout(() => setStatus(""), 1200);
+    });
+
+    $("cancelBtn").addEventListener("click", () => {
+      closeEdit();
+      setStatus("");
+    });
+
+    $("resetBtn").addEventListener("click", () => {
+      const def = defaultTargetISO();
+      writeTargetISO(def);
+      if ($("editPanel").style.display === "flex") $("targetDate").value = def;
+      setStatus("Reset to 30 days from today.");
+      update();
+      setTimeout(() => setStatus(""), 1400);
+    });
+
+    // Run
+    update();
+    // Update once per minute (days don’t need per-second updates)
+    setInterval(update, 60 * 1000);
   </script>
 </body>
 </html>
